@@ -14,6 +14,7 @@ import java.util.List;
 @Api(tags = "Gestion des produits")
 @RequestMapping("/produit")
 public class ProduitRestController {
+	//hello
 
 	@Autowired
 	IProduitService produitService;
