@@ -26,15 +26,15 @@ public class CategorieProduitServiceImplTest {
     @Test
 
     public void testretrieveAllCategorieProduits(){
-        List<CategorieProduit> sampleDepartments = Arrays.asList(new CategorieProduit(), new CategorieProduit());
+        List<CategorieProduit> sampleProduit = Arrays.asList(new CategorieProduit(), new CategorieProduit());
 
-        when(categorieProduitRepository.findAll()).thenReturn(sampleDepartments);
+        when(categorieProduitRepository.findAll()).thenReturn(sampleProduit);
 
         List<CategorieProduit> result = categorieProduitService.retrieveAllCategorieProduits();
 
         verify(categorieProduitRepository, times(1)).findAll();
 
-        assertEquals(sampleDepartments, result);
+        assertEquals(sampleProduit, result);
     }
     @Test
     public void testaddCategorieProduit(){
