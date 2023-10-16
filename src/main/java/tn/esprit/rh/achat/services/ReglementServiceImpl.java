@@ -1,5 +1,6 @@
 package tn.esprit.rh.achat.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.repositories.FactureRepository;
@@ -11,16 +12,10 @@ import java.util.List;
 @Service
 public class ReglementServiceImpl implements IReglementService {
 
-	final
+	@Autowired
 	FactureRepository factureRepository;
-	final
+	@Autowired
 	ReglementRepository reglementRepository;
-
-	public ReglementServiceImpl(FactureRepository factureRepository, ReglementRepository reglementRepository) {
-		this.factureRepository = factureRepository;
-		this.reglementRepository = reglementRepository;
-	}
-
 	@Override
 	public List<Reglement> retrieveAllReglements() {
 		return (List<Reglement>) reglementRepository.findAll();
@@ -34,17 +29,19 @@ public class ReglementServiceImpl implements IReglementService {
 
 	@Override
 	public Reglement retrieveReglement(Long id) {
-		return reglementRepository.findById(id).orElse(null);
+		Reglement reglement = reglementRepository.findById(id).orElse(null);
 
+		return reglement;
 	}
 
 	@Override
 	public List<Reglement> retrieveReglementByFacture(Long idFacture) {
-		return reglementRepository.retrieveReglementByFacture(idFacture);
-
+		List<Reglement> reglements= reglementRepository.retrieveReglementByFacture(idFacture);
+		return reglements;
 
 //		ou bien(Sans JPQL)
-//
+//		Facture f= factureRepository.findById(idFacture).get();
+//		return (List<Reglement>) f.getReglements();
 	}
 
 	@Override
