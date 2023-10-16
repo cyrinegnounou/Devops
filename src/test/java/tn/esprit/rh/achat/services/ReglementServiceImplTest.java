@@ -9,7 +9,6 @@ import static org.mockito.Mockito.when;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.repositories.FactureRepository;
 import tn.esprit.rh.achat.repositories.ReglementRepository;
-import tn.esprit.rh.achat.services.ReglementServiceImpl;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -17,9 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 
-public class ReglementServiceImplTest {
+ class ReglementServiceImplTest {
     @InjectMocks
     private ReglementServiceImpl reglementService;
 
@@ -35,7 +33,7 @@ public class ReglementServiceImplTest {
     }
 
     @Test
-    public void testAddReglement() {
+     void testAddReglement() {
         Reglement reglement = new Reglement();
 
         // Configurer le mock pour que reglementRepository.save renvoie le Reglement que vous avez créé
@@ -46,7 +44,7 @@ public class ReglementServiceImplTest {
         assertEquals(reglement, result);
     }
     @Test
-    public void testRetrieveAllReglements() {
+     void testRetrieveAllReglements() {
         List<Reglement> reglements = Arrays.asList(new Reglement(), new Reglement());
         when(reglementRepository.findAll()).thenReturn(reglements);
 
@@ -55,7 +53,7 @@ public class ReglementServiceImplTest {
         assertEquals(2, result.size());
     }
     @Test
-    public void testRetrieveReglement() {
+     void testRetrieveReglement() {
         Long reglementId = 1L;
         Reglement reglement = new Reglement();
         when(reglementRepository.findById(reglementId)).thenReturn(Optional.of(reglement));
@@ -65,7 +63,7 @@ public class ReglementServiceImplTest {
         assertEquals(reglement, result);
     }
     @Test
-    public void testRetrieveReglementByFacture() {
+     void testRetrieveReglementByFacture() {
         Long factureId = 1L;
         List<Reglement> reglements = Arrays.asList(new Reglement(), new Reglement());
         when(reglementRepository.retrieveReglementByFacture(factureId)).thenReturn(reglements);
@@ -75,7 +73,7 @@ public class ReglementServiceImplTest {
         assertEquals(2, result.size());
     }
     @Test
-    public void testGetChiffreAffaireEntreDeuxDate() {
+     void testGetChiffreAffaireEntreDeuxDate() {
         Date startDate = new Date();
         Date endDate = new Date();
         float chiffreAffaire = 1000.0f;
