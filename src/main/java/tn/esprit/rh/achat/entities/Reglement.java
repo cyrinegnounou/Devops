@@ -35,6 +35,4 @@ public class Reglement implements Serializable{
 	@JsonIgnore
 	private Facture facture;
 
-    public void setSomeField(Object someField) {
-    }
 }

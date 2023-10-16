@@ -23,7 +23,7 @@ public class ReglementServiceImpl implements IReglementService {
 
 	@Override
 	public Reglement addReglement(Reglement r) {
-        reglementRepository.save(r);
+		reglementRepository.save(r);
 		return r;
 	}
 
