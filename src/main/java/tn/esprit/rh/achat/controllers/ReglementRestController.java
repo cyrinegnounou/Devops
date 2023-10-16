@@ -1,9 +1,10 @@
 package tn.esprit.rh.achat.controllers;
 
 import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.rh.achat.dto.ReglementRequest;
 import tn.esprit.rh.achat.entities.Reglement;
 import tn.esprit.rh.achat.services.IReglementService;
 
@@ -16,22 +17,35 @@ import java.util.List;
 @CrossOrigin("*")
 public class ReglementRestController {
 
-    @Autowired
+    final
     IReglementService reglementService;
+
+    public ReglementRestController(IReglementService reglementService) {
+        this.reglementService = reglementService;
+    }
 
 
     // http://localhost:8089/SpringMVC/reglement/add-reglement
     @PostMapping("/add-reglement")
     @ResponseBody
-    public Reglement addReglement(@RequestBody Reglement r) {
-        Reglement reglement = reglementService.addReglement(r);
-        return reglement;
+    public ResponseEntity<Reglement> addReglement(@RequestBody ReglementRequest request) {
+        // Créer une instance de l'entité Reglement à partir des données du DTO
+        Reglement reglement = new Reglement();
+        reglement.setSomeField(request.getSomeField());
+        // Autres affectations de champs en fonction des données du DTO
+
+        // Enregistrer l'entité dans la base de données
+        Reglement savedReglement = reglementService.addReglement(reglement);
+
+        // Retourner une réponse appropriée, par exemple, le Reglement sauvegardé
+        return ResponseEntity.ok(savedReglement);
     }
+
+
     @GetMapping("/retrieve-all-reglements")
     @ResponseBody
     public List<Reglement> getReglement() {
-        List<Reglement> list = reglementService.retrieveAllReglements();
-        return list;
+        return reglementService.retrieveAllReglements();
     }
 
     // http://localhost:8089/SpringMVC/reglement/retrieve-reglement/8
@@ -48,7 +62,6 @@ public class ReglementRestController {
         return reglementService.retrieveReglementByFacture(factureId);
     }
 
-    // http://localhost:8089/SpringMVC/reglement/getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}
     @GetMapping(value = "/getChiffreAffaireEntreDeuxDate/{startDate}/{endDate}")
     public float getChiffreAffaireEntreDeuxDate(
             @PathVariable(name = "startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
