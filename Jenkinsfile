@@ -1,13 +1,36 @@
 pipeline {
     agent any
     tools {
+        // Assuming 'M2_HOME' is a valid tool in your Jenkins configuration
         maven 'M2_HOME'
     }
     stages {
-        stage('build maven') {
+        stage('Git') {
             steps {
-                checkout scmGit(branches: [[name: '*/Reglement']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cyrinegnounou/DevOps_Pioneers']])
+                echo "Getting project from git"
+                git branch: 'Reglement', credentialsId: 'git_credentials', url: 'https://github.com/cyrinegnounou/DevOps_Pioneers'
+            }
+        }
+        stage('Build') {
+            steps {
                 sh 'mvn clean install'
+            }
+        }
+        stage('Compiling') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+
+        stage('SonarQube') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=azerty'
+            }
+        }
+        stage('junit & mockito') {
+            steps {
+                sh 'mvn test'
+                junit '**/target/surefire-reports/TEST-*.xml'
             }
         }
         stage('build docker image') {
@@ -27,5 +50,7 @@ pipeline {
                 }
             }
         }
+
+
     }
 }
