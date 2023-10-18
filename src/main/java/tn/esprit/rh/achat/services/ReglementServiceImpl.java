@@ -1,5 +1,4 @@
 package tn.esprit.rh.achat.services;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.rh.achat.entities.Reglement;
@@ -12,10 +11,16 @@ import java.util.List;
 @Service
 public class ReglementServiceImpl implements IReglementService {
 
-	@Autowired
+	final
 	FactureRepository factureRepository;
-	@Autowired
+	final
 	ReglementRepository reglementRepository;
+
+	public ReglementServiceImpl(FactureRepository factureRepository, ReglementRepository reglementRepository) {
+		this.factureRepository = factureRepository;
+		this.reglementRepository = reglementRepository;
+	}
+
 	@Override
 	public List<Reglement> retrieveAllReglements() {
 		return (List<Reglement>) reglementRepository.findAll();
