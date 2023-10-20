@@ -107,8 +107,37 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!-- Dépendance du plugin JaCoCo -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.7</version> <!-- Utilisez la version appropriée -->
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- Dépendance du plugin SonarQube -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.0.2155</version> <!-- Utilisez la version appropriée -->
+			</plugin>
 		</plugins>
 		<finalName>devops-integration</finalName>
 	</build>
+
+
+
 
 </project>
