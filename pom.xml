@@ -126,11 +126,7 @@
 				</executions>
 			</plugin>
 			<!-- Dépendance du plugin SonarQube -->
-			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.9.0.2155</version> <!-- Utilisez la version appropriée -->
-			</plugin>
+
 		</plugins>
 		<finalName>devops-integration</finalName>
 	</build>
