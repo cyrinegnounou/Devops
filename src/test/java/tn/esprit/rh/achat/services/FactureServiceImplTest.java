@@ -134,7 +134,6 @@ public class FactureServiceImplTest {
         // Add other assertions for this test case as needed
     }
 
-
     @Test
     public void testpourcentageRecouvrement() {
         Date startDate = new Date();
