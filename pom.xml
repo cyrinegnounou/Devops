@@ -58,11 +58,7 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>3.0.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>3.12.4</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
@@ -116,6 +112,7 @@
 				</executions>
 			</plugin>
 		</plugins>
+		<finalName>devops-integration</finalName>
 	</build>
 
 </project>
