@@ -94,6 +94,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>devops-project</finalName>
+		<finalName>devops-integration</finalName>
 	</build>
 </project>
