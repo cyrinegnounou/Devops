@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
 import tn.esprit.rh.achat.entities.*;
 import tn.esprit.rh.achat.repositories.*;
@@ -132,39 +133,6 @@ public class FactureServiceImplTest {
         assertEquals(2, factureCount); // Assuming there are 2 Factures in the set
         // Add other assertions for this test case as needed
     }
-//test
-
-    public void testassignOperateurToFacture() {
-        // Mock the required repositories
-        FactureRepository factureRepository = Mockito.mock(FactureRepository.class);
-        OperateurRepository operateurRepository = Mockito.mock(OperateurRepository.class);
-
-        // Create a FactureServiceImpl instance
-        FactureServiceImpl factureService = new FactureServiceImpl();
-
-        // Set the mocked repositories using ReflectionTestUtils
-        ReflectionTestUtils.setField(factureService, "factureRepository", factureRepository);
-        ReflectionTestUtils.setField(factureService, "operateurRepository", operateurRepository);
-
-        // Define your test data
-        Long idOperateur = 1L;
-        Long idFacture = 2L;
-
-        // Mock the behavior of the repositories
-        Facture facture = new Facture();
-        Operateur operateur = new Operateur();
-        Mockito.when(factureRepository.findById(idFacture)).thenReturn(Optional.of(facture));
-        Mockito.when(operateurRepository.findById(idOperateur)).thenReturn(Optional.of(operateur));
-
-        // Call the method you want to test
-        factureService.assignOperateurToFacture(idOperateur, idFacture);
-
-        // Assertions: Add assertions based on your test logic
-        // For example, you can verify if operateur.getFactures() has the expected Facture instance.
-        Assert.assertTrue(operateur.getFactures().contains(facture));
-    }
-
-
 
 
     @Test
