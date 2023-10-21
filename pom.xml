@@ -67,14 +67,14 @@
 		</dependency>
 
 	</dependencies>
-
 	<distributionManagement>
 		<repository>
 			<id>deploymentRepo</id>
 			<name>Nexus Repository</name>
-			<url>http://localhost:8081/repository/maven-releases/</url>
+			<url>http://192.168.1.23:8081/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -83,7 +83,7 @@
 				<configuration>
 					<excludes>
 						<exclude>
-							<groupId>org.projectlombok</groupId>
+							<groupId>org.project.lombok</groupId>
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
@@ -99,6 +99,8 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
 	</build>
+
 
 </project>
