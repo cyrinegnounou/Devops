@@ -1,61 +1,44 @@
 package tn.esprit.rh.achat.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import tn.esprit.rh.achat.entities.Operateur;
 import tn.esprit.rh.achat.repositories.OperateurRepository;
-import tn.esprit.rh.achat.services.OperateurServiceImpl;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OperateurServiceImplTest {
 
+ @InjectMocks
  private OperateurServiceImpl operateurService;
+
+ @Mock
  private OperateurRepository operateurRepository;
-
- @Before
- public void setUp() {
-  operateurRepository = mock(OperateurRepository.class);
-  operateurService = new OperateurServiceImpl();
+ @BeforeEach
+ public void setup() {
+  MockitoAnnotations.openMocks(this);
  }
 
  @Test
- public void testRetrieveAllOperateurs() {
-  when(operateurRepository.findAll()).thenReturn(Arrays.asList(new Operateur(), new Operateur()));
-
-  List<Operateur> operateurs = operateurService.retrieveAllOperateurs();
-
-  assertEquals(2, operateurs.size());
- }
-
- @Test
- public void testAddOperateur() {
+ void testaddOperateur() {
   Operateur operateur = new Operateur();
+
+  // Configurer le mock pour que reglementRepository.save renvoie le Reglement que vous avez créé
   when(operateurRepository.save(operateur)).thenReturn(operateur);
 
-  Operateur addedOperateur = operateurService.addOperateur(operateur);
+  Operateur result = operateurService.addOperateur(operateur);
 
-  assertNotNull(addedOperateur);
+  assertEquals(operateur, result);
  }
-
  @Test
- public void testDeleteOperateur() {
-  Long id = 1L;
-
-  operateurService.deleteOperateur(id);
-
-  verify(operateurRepository).deleteById(id);
- }
-
- @Test
- public void testUpdateOperateur() {
+ public void testupdateOperateur() {
   Operateur operateur = new Operateur();
   when(operateurRepository.save(operateur)).thenReturn(operateur);
 
@@ -63,9 +46,16 @@ public class OperateurServiceImplTest {
 
   assertNotNull(updatedOperateur);
  }
+ @Test
+ void testDeleteOperateur() {
+  Long stockId = 1L;
+  doNothing().when(operateurRepository).deleteById(stockId);
+  operateurService.deleteOperateur(stockId);
+  verify(operateurRepository).deleteById(stockId);
+ }
 
  @Test
- public void testRetrieveOperateur() {
+ public void testretrieveOperateur() {
   Long id = 1L;
   Operateur operateur = new Operateur();
   when(operateurRepository.findById(id)).thenReturn(Optional.of(operateur));
@@ -74,4 +64,13 @@ public class OperateurServiceImplTest {
 
   assertNotNull(retrievedOperateur);
  }
+ @Test
+ public void testretrieveAllOperateurs() {
+  when(operateurRepository.findAll()).thenReturn(Arrays.asList(new Operateur(), new Operateur()));
+
+  List<Operateur> operateurs = operateurService.retrieveAllOperateurs();
+
+  assertEquals(2, operateurs.size());
+ }
+
 }

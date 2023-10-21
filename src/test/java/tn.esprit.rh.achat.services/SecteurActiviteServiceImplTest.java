@@ -1,75 +1,79 @@
 package tn.esprit.rh.achat.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import tn.esprit.rh.achat.entities.SecteurActivite;
+
 import tn.esprit.rh.achat.repositories.SecteurActiviteRepository;
+
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SecteurActiviteServiceImplTest {
 
+    @InjectMocks
     private SecteurActiviteServiceImpl secteurActiviteService;
+
+    @Mock
     private SecteurActiviteRepository secteurActiviteRepository;
-
-    @Before
-    public void setUp() {
-        secteurActiviteRepository = mock(SecteurActiviteRepository.class);
-        secteurActiviteService = new SecteurActiviteServiceImpl();
+    @BeforeEach
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testRetrieveAllSecteurActivite() {
-        when(secteurActiviteRepository.findAll()).thenReturn(Arrays.asList(new SecteurActivite(), new SecteurActivite()));
+    void testaddSecteurActivite() {
+        SecteurActivite secteurActivite = new SecteurActivite();
 
-        List<SecteurActivite> secteurs = secteurActiviteService.retrieveAllSecteurActivite();
+        // Configurer le mock pour que reglementRepository.save renvoie le Reglement que vous avez créé
+        when(secteurActiviteRepository.save(secteurActivite)).thenReturn(secteurActivite);
 
-        assertEquals(2, secteurs.size());
+        SecteurActivite result = secteurActiviteService.addSecteurActivite(secteurActivite);
+
+        assertEquals(secteurActivite, result);
+    }
+    @Test
+    public void testupdateSecteurActivite() {
+        SecteurActivite secteurActivite = new SecteurActivite();
+        when(secteurActiviteRepository.save(secteurActivite)).thenReturn(secteurActivite);
+
+        SecteurActivite updatedSecteurActivite = secteurActiviteService.updateSecteurActivite(secteurActivite);
+
+        assertNotNull(updatedSecteurActivite);
+    }
+    @Test
+    void testDeleteSecteurActivite() {
+        Long stockId = 1L;
+        doNothing().when(secteurActiviteRepository).deleteById(stockId);
+        secteurActiviteService.deleteSecteurActivite(stockId);
+        verify(secteurActiviteRepository).deleteById(stockId);
     }
 
     @Test
-    public void testAddSecteurActivite() {
-        SecteurActivite secteur = new SecteurActivite();
-        when(secteurActiviteRepository.save(secteur)).thenReturn(secteur);
-
-        SecteurActivite addedSecteur = secteurActiviteService.addSecteurActivite(secteur);
-
-        assertNotNull(addedSecteur);
-    }
-
-    @Test
-    public void testDeleteSecteurActivite() {
+    public void testretrieveSecteurActivite() {
         Long id = 1L;
+        SecteurActivite secteurActivite = new SecteurActivite();
+        when(secteurActiviteRepository.findById(id)).thenReturn(Optional.of(secteurActivite));
 
-        secteurActiviteService.deleteSecteurActivite(id);
+        SecteurActivite  retrievedSecteurActivite  = secteurActiviteService.retrieveSecteurActivite(id);
 
-        verify(secteurActiviteRepository).deleteById(id);
+        assertNotNull(retrievedSecteurActivite );
     }
-
     @Test
-    public void testUpdateSecteurActivite() {
-        SecteurActivite secteur = new SecteurActivite();
-        when(secteurActiviteRepository.save(secteur)).thenReturn(secteur);
+    public void testretrieveAllSecteurActivite () {
+        when(secteurActiviteRepository.findAll()).thenReturn(Arrays.asList(new SecteurActivite (), new SecteurActivite()));
 
-        SecteurActivite updatedSecteur = secteurActiviteService.updateSecteurActivite(secteur);
+        List<SecteurActivite > secteurActivite  = secteurActiviteService.retrieveAllSecteurActivite();
 
-        assertNotNull(updatedSecteur);
+        assertEquals(2, secteurActivite .size());
     }
 
-    @Test
-    public void testRetrieveSecteurActivite() {
-        Long id = 1L;
-        SecteurActivite secteur = new SecteurActivite();
-        when(secteurActiviteRepository.findById(id)).thenReturn(Optional.of(secteur));
-
-        SecteurActivite retrievedSecteur = secteurActiviteService.retrieveSecteurActivite(id);
-
-        assertNotNull(retrievedSecteur);
-    }
 }
