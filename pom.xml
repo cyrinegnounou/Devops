@@ -53,6 +53,7 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
@@ -120,5 +121,16 @@
 		</plugins>
 		<finalName>devops-integration</finalName>
 	</build>
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+		</repository>
+		<repository>
+			<id>my-custom-repo</id>
+			<url>https://example.com/maven-repo</url>
+		</repository>
+		<!-- Ajoutez d'autres référentiels au besoin -->
+	</repositories>
 <!---->
 </project>
