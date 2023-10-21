@@ -70,9 +70,9 @@
 	</dependencies>
 	<distributionManagement>
 		<repository>
-			<id>deploymentRepo</id>
-			<name>Nexus Repository</name>
-			<url>http://192.168.1.23:8081/repository/maven-releases/</url>
+			<id>nexus</id>
+			<name>nexus-project</name>
+			<url>http://192.168.1.23:8081/repository/nexus-project/</url>
 		</repository>
 	</distributionManagement>
 
@@ -105,5 +105,5 @@
 
 	</build>
 
-<!-- okldsùlmcùxsm -->
+<!-- okldsùlmcùxsm  lùllm -->
 </project>
