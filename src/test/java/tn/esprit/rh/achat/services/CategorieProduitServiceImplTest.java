@@ -29,7 +29,6 @@ class CategorieProduitServiceImplTest {
     @Test
     void testRetrieveAllCategorieProduits() {
         List<CategorieProduit> categorieProduits = new ArrayList<>();
-        // Add logic to populate categorieProduits list as needed for the test
         when(categorieProduitRepository.findAll()).thenReturn(categorieProduits);
 
         List<CategorieProduit> result = categorieProduitService.retrieveAllCategorieProduits();
@@ -40,7 +39,6 @@ class CategorieProduitServiceImplTest {
     @Test
     void testAddCategorieProduit() {
         CategorieProduit categorieProduit = new CategorieProduit();
-        // Add logic to set properties of categorieProduit as needed for the test
         when(categorieProduitRepository.save(categorieProduit)).thenReturn(categorieProduit);
 
         CategorieProduit result = categorieProduitService.addCategorieProduit(categorieProduit);
@@ -58,7 +56,6 @@ class CategorieProduitServiceImplTest {
     @Test
     void testUpdateCategorieProduit() {
         CategorieProduit categorieProduit = new CategorieProduit();
-        // Add logic to set properties of categorieProduit as needed for the test
         when(categorieProduitRepository.save(categorieProduit)).thenReturn(categorieProduit);
 
         CategorieProduit result = categorieProduitService.updateCategorieProduit(categorieProduit);
@@ -70,7 +67,6 @@ class CategorieProduitServiceImplTest {
     void testRetrieveCategorieProduit() {
         Long id = 1L;
         CategorieProduit categorieProduit = new CategorieProduit();
-        // Add logic to set properties of categorieProduit as needed for the test
         when(categorieProduitRepository.findById(id)).thenReturn(Optional.of(categorieProduit));
 
         CategorieProduit result = categorieProduitService.retrieveCategorieProduit(id);
