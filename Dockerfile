@@ -1,6 +1,7 @@
 FROM openjdk:8
-EXPOSE 8080
-ADD target/devops-integration.jar devops-integration.jar
+EXPOSE 8091
+WORKDIR /DevOps_Pioneers
+ADD target/devops-integration.jar /DevOps_Pioneers/
 ENTRYPOINT ["java" , "-jar","/devops-integration.jar"]
 
 # This is a comment in a Dockerfiles
