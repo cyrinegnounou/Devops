@@ -28,5 +28,9 @@ services:
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"}'
 
+networks:
+  my_network:
+    driver: bridge
+
 volumes:
   db:
