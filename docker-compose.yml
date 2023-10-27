@@ -12,10 +12,8 @@ services:
       - 3307:3306
     volumes:
       - db:/var/lib/mysql
-    networks:
-      - mynetwork
-  backend:
-    image: backend
+
+  app:
     depends_on:
       - mysqldb
     build: ./
@@ -29,14 +27,6 @@ services:
         "spring.datasource.password" : "mypass1234",
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.hibernate.ddl-auto" : "update"}'
-    volumes:
-      - ./m2:/root/.m2
-    networks:
-      - mynetwork
-
-networks:
-  mynetwork:
-    driver: bridge
 
 volumes:
   db:
