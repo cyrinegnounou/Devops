@@ -3,7 +3,7 @@ version: "3.8"
 services:
   myservice:
     image: backend:latest
-    command: java -jar devops-integration.jar
+    command: ["java", "-jar", "devops-integration.jar"]
   mysqldb:
     image: mysql:5.7
     restart: unless-stopped
