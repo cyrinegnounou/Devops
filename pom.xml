@@ -133,7 +133,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-		<finalName>devopsintegration</finalName>
+		<finalName>devops-integration</finalName>
 	</build>
 	<!---->
 </project>
