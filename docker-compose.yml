@@ -33,6 +33,14 @@ services:
       - ./m2:/root/.m2
     networks:
       - mynetwork
+  frontend:
+    image: my-angular-app
+    build: ./crud-tuto-front 
+    restart: on-failure
+    ports:
+      - 80:80
+    networks:
+      - mynetwork
 
 networks:
   mynetwork:
