@@ -1,11 +1,11 @@
 FROM openjdk:11
 
 # Set the working directory
-WORKDIR /app
+WORKDIR /DevOps_Pioneers
 
-COPY target/*.jar /app.jar
+COPY target/devops-integration.jar /DevOps_Pioneers/devops-integration.jar
 
 EXPOSE 8089
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "devops-integration.jar"]
 #ranou
