@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   myservice:
-    image: backend:latest
+    image: project/backend:latest
     command: ["java", "-jar", "devops-integration.jar"]
   mysqldb:
     image: mysql:5.7
