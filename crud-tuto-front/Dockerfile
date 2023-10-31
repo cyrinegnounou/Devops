@@ -2,7 +2,7 @@ FROM node:16.13 AS builder
 WORKDIR /app
 COPY package*.json ./
 RUN npm install -g @angular/cli
-RUN npm ci
+RUN npm install
 COPY . .
 RUN ng build --prod
 FROM nginx:alpine
