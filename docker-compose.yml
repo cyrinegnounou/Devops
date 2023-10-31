@@ -15,7 +15,7 @@ services:
     networks:
       - mynetwork
   backend:
-    image: backend
+    image: back
     depends_on:
       - mysqldb
     build: ./
