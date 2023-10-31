@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class FactureService {
-  readonly API_URL = 'http://192.168.1.9:8080/SpringMVC/facture';
+  readonly API_URL = 'http://192.168.1.9:8090/SpringMVC/facture';
 
   constructor(private httpClient: HttpClient) { }
 
