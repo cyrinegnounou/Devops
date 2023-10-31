@@ -1,11 +1,11 @@
-FROM node:14 AS builder
+# stage 1
+FROM node:14.21.3-alpine as node
 WORKDIR /app
-COPY package*.json ./
-RUN npm install -g @angular/cli
-RUN npm install
 COPY . .
-RUN ng build --prod
+RUN npm install
+RUN npm run build --prod
+
+# stage 2
 FROM nginx:alpine
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY --from=node /app/dist/crudtuto-Front /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]

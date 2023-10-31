@@ -24,12 +24,13 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
     networks:
       - my-network
-  frontend:
-    image: frontend
-    build: ./crud-tuto-front
-    restart: on-failure
+  angular-app:
+    image: ranou98/frontachat
+    container_name: docker-compose-angular-app
     ports:
-      - 80:80
+      - "4200:80"
+    depends_on:
+      - spring-boot-app
     networks:
       - my-network
 networks:
