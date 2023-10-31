@@ -1,12 +1,10 @@
-FROM node:14.20 AS builder
+FROM node:4.20-alpine as node
 WORKDIR /app
-COPY package*.json ./
-RUN npm install -g @angular/cli
-RUN npm install
 COPY . .
-RUN ng build --prod
-FROM nginx:alpine
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+RUN npm install
+RUN npm run build --prod
 
+# stage 2
+FROM nginx:alpine
+COPY --from=node /app/dist/crudtuto-Front /usr/share/nginx/html
+EXPOSE 80
