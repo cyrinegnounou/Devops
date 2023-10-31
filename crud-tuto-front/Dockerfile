@@ -8,3 +8,4 @@ RUN npm run build --prod
 FROM nginx:alpine
 COPY --from=node /app/dist/crudtuto-Front /usr/share/nginx/html
 EXPOSE 80
+#gg
