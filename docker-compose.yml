@@ -24,6 +24,14 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
     networks:
       - my-network
-
+  frontend:
+    image: frontend
+    build: ./crud-tuto-front
+    restart: on-failure
+    ports:
+      - 80:80
+    networks:
+      - mynetwork
 networks:
   my-network:
+
