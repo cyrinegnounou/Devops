@@ -34,6 +34,15 @@ services:
     networks:
       - mynetwork
 
+  frontend:
+      image: frontend
+      build: ./crud-tuto-front
+      restart: on-failure
+      ports:
+        - 80:80
+      networks:
+        - mynetwork
+
 networks:
   mynetwork:
     driver: bridge
