@@ -28,7 +28,7 @@ services:
     image: ranou98/frontachat
     container_name: docker-compose-angular-app
     ports:
-      - "4200:80"
+      - "80:80"
     depends_on:
       - spring-boot-app
     networks:
