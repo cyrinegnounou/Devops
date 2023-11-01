@@ -35,7 +35,7 @@ services:
       - mynetwork
   frontend:
     image: frontend
-    build: ./angular-app
+    build: ./crud-tuto-front
     restart: on-failure
     ports:
       - 80:80
