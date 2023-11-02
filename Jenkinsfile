@@ -154,6 +154,14 @@ stage("Quality Gate") {
                 }
             }
         }
+        stage('Deploy to k8S'){
+        steps{
+        script{
+        kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+
+        }
+        }
+        }
 
 
         stage ('upload Artifact to Nexus') {
