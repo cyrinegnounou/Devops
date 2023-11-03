@@ -100,15 +100,15 @@ stage("Quality Gate") {
 
 
 
- //stage('Push Metrics to Prometheus') {
-   // steps {
-         //echo "Étape 12 : Envoi de métriques à Prometheus"
-        //script {
-            //sh 'curl http://192.168.1.14:8080/metrics/NfPwF3FXQZ1wURuvEyjtKOFc4u6Eswrz_xSkI9l0CQMl6ig5L1or7YjbS1wMT3kJ'
+ stage('Push Metrics to Prometheus') {
+    steps {
+         echo "Étape 12 : Envoi de métriques à Prometheus"
+        script {
+            sh 'curl http://192.168.1.14:8080/metrics/NfPwF3FXQZ1wURuvEyjtKOFc4u6Eswrz_xSkI9l0CQMl6ig5L1or7YjbS1wMT3kJ'
 
-    //}
-//}
-//}
+    }
+}
+}
 
 
 
@@ -145,6 +145,14 @@ stage("Quality Gate") {
                 }
             }
         }
+        stage('Deploy to k8S'){
+                steps{
+                script{
+                 kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+
+                }
+                }
+                }
         stage('Build and Deploy with Docker Compose') {
             steps {
                                 echo "Étape 14 : Construction et déploiement avec Docker Compose"
@@ -154,14 +162,7 @@ stage("Quality Gate") {
                 }
             }
         }
-        stage('Deploy to k8S'){
-        steps{
-        script{
-        kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
 
-        }
-        }
-        }
 
 
         stage ('upload Artifact to Nexus') {
