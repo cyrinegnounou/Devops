@@ -145,14 +145,20 @@ stage("Quality Gate") {
                 }
             }
         }
-        stage('Deploy to k8S'){
-                steps{
-                script{
-                 kubernetesDeploy(configs: "deployment.yaml", "service.yaml")
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    kubernetesDeploy(
+                        configs: [
+                            file('deployment.yaml'), // Path to your Deployment configuration file
+                            file('service.yaml')     // Path to your Service configuration file
+                        ],
+                        kubeconfigId: 'k8sconfigpwd'
+                    )
+                }
+            }
+        }
 
-                }
-                }
-                }
         stage('Build and Deploy with Docker Compose') {
             steps {
                                 echo "Étape 14 : Construction et déploiement avec Docker Compose"
