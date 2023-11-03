@@ -145,20 +145,20 @@ stage("Quality Gate") {
                 }
             }
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    kubernetesDeploy(
-                        configs: 'deployment.yaml', // Path to your Deployment configuration file
-                        kubeconfigId: 'k8sconfigpwd'
-                    )
-                    kubernetesDeploy(
-                        configs: 'service.yaml', // Path to your Service configuration file
-                        kubeconfigId: 'k8sconfigpwd'
-                    )
-                }
-            }
-        }
+        //stage('Deploy to Kubernetes') {
+           // steps {
+                //script {
+                    //kubernetesDeploy(
+                        //configs: 'deployment.yaml', // Path to your Deployment configuration file
+                        //kubeconfigId: 'k8sconfigpwd'
+                    //)
+                    //kubernetesDeploy(
+                       // configs: 'service.yaml', // Path to your Service configuration file
+                        //kubeconfigId: 'k8sconfigpwd'
+                    //)
+                //}
+            //}
+        //}
 
         stage('Build and Deploy with Docker Compose') {
             steps {
