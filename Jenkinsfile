@@ -148,7 +148,14 @@ stage("Quality Gate") {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+                    kubernetesDeploy(
+                        configs: 'deployment.yaml', // Path to your Deployment configuration file
+                        kubeconfigId: 'k8sconfigpwd'
+                    )
+                    kubernetesDeploy(
+                        configs: 'service.yaml', // Path to your Service configuration file
+                        kubeconfigId: 'k8sconfigpwd'
+                    )
                 }
             }
         }
