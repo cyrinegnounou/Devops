@@ -1,36 +1,75 @@
 apiVersion: apps/v1
-kind: Deployment # Kubernetes resource kind we are creating
+kind: Deployment
 metadata:
-  name: spring-boot-k8s-deployment
+  name: achat-deployment
 spec:
   selector:
     matchLabels:
-      app: spring-boot-k8s
-  replicas: 2 # Number of replicas that will be created for this deployment
+      app: achat
+  replicas: 2
   template:
     metadata:
       labels:
-        app: spring-boot-k8s
+        app: achat
     spec:
       containers:
-        - name: spring-boot-k8s
-          image:   mohamedamine1/saadbguir:backend # Image that will be used to containers in the cluster
+        - name: backend-spring
+          image: mohamedamine1/saadbguir:backend
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8089 # The port that the container is running on in the cluster
+            - containerPort: 8089
 
+        - name: frontend-angular
+          image: mohamedamine1/saadbguir:frontend  # Replace with the actual image for your frontend application
+          ports:
+            - containerPort: 80  # The port for your frontend container
+
+        - name: mysqldb
+          image: mysql:5.7
+          env:
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"
+            - name: MYSQL_ROOT_PASSWORD
+              value: mypass1234
+            - name: MYSQL_DATABASE
+              value: achatdb
+          ports:
+            - containerPort: 3306
+
+      volumes:
+        - name: mysql-data
+          emptyDir: {}
 
 ---
 
-apiVersion: v1 # Kubernetes API version
-kind: Service # Kubernetes resource kind we are creating
-metadata: # Metadata of the resource kind we are creating
-  name: springboot-k8ssvc
+apiVersion: v1
+kind: Service
+metadata:
+  name: achat-service
 spec:
   selector:
-    app: spring-boot-k8s
+    app: achat
   ports:
-    - protocol: "TCP"
-      port: 8089 # The port that the service is running on in the cluster
-      targetPort: 8089 # The port exposed by the service
-  type: NodePort # type of the service.
+    - name: backend-port
+      protocol: "TCP"
+      port: 8089
+      targetPort: 8089
+    - name: frontend-port
+      protocol: "TCP"
+      port: 80
+      targetPort: 80  # Match the targetPort to the frontend container's port
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldb-service
+spec:
+  selector:
+    app: achat
+  ports:
+    - name: mysql-port
+      protocol: "TCP"
+      port: 3306
+      targetPort: 3306  # Match the targetPort to the mysqldb container's port
