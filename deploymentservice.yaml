@@ -3,10 +3,10 @@ kind: Deployment
 metadata:
   name: achat-deployment
 spec:
+  replicas: 2
   selector:
     matchLabels:
       app: achat
-  replicas: 2
   template:
     metadata:
       labels:
@@ -20,15 +20,15 @@ spec:
             - containerPort: 8089
 
         - name: frontend-angular
-          image: mohamedamine1/saadbguir:frontend  # Replace with the actual image for your frontend application
+          image: mohamedamine1/saadbguir:frontend
           ports:
-            - containerPort: 80  # The port for your frontend container
+            - containerPort: 80
 
         - name: mysqldb
           image: mysql:5.7
           env:
             - name: MYSQL_ALLOW_EMPTY_PASSWORD
-              value: "yes"
+              value: "no"
             - name: MYSQL_ROOT_PASSWORD
               value: mypass1234
             - name: MYSQL_DATABASE
@@ -57,10 +57,11 @@ spec:
     - name: frontend-port
       protocol: "TCP"
       port: 80
-      targetPort: 80  # Match the targetPort to the frontend container's port
-  type: NodePort
+      targetPort: 80
+  type: LoadBalancer
 
 ---
+
 apiVersion: v1
 kind: Service
 metadata:
@@ -72,4 +73,4 @@ spec:
     - name: mysql-port
       protocol: "TCP"
       port: 3306
-      targetPort: 3306  # Match the targetPort to the mysqldb container's port
+      targetPort: 3306
