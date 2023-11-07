@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     tools {
         maven 'M2_HOME'
     }
@@ -111,28 +112,18 @@ stage("Quality Gate") {
 }
 
 
-
-
-
-
-
-
-
-
-
          stage('Docker images') {
             steps {
                 script {
                     sh 'docker build -t mohamedamine1/saadbguir:backend .'
                     sh 'docker build crud-tuto-front -t mohamedamine1/saadbguir:frontend'
-                    sh 'docker pull mysql:5.7'
+                    //sh 'docker pull mysql:5.7'
 
 
                 }
             }
         }
-
-        stage('push image to hub') {
+      stage('push image to hub') {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'docker-pss', variable: 'dockerpss')]) {
@@ -145,13 +136,6 @@ stage("Quality Gate") {
                 }
             }
         }
-        tage('Deploy to k8s'){
-                    steps{
-                        script{
-                            kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'k8sconfig', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-                        }
-                    }
-                }
 
         stage('Build and Deploy with Docker Compose') {
             steps {
@@ -162,6 +146,15 @@ stage("Quality Gate") {
                 }
             }
         }
+        //stage('Deploy to k8s'){
+                    //steps{
+                        //script{
+                            //kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfig')
+                        //}
+                    //}
+                //}
+
+
 
 
 
@@ -191,6 +184,79 @@ stage("Quality Gate") {
 
             }
 
+              stage('Prometheus Metrics Scraping') {
+    steps {
+        script {
+            // Liste des noms de job Prometheus à scraper
+            def prometheusJobs = [
+                'Nexus',
+                'SonarQube',
+                'docker',
+                'jenkins',
+                'prometheus'
+            ]
+
+            def prometheusURL = 'http://192.168.1.14:9090' // URL de votre serveur Prometheus
+
+            // Parcourir la liste des jobs et déclencher le scraping pour chaque job
+            for (def jobName in prometheusJobs) {
+                def prometheusScrapeCommand = "curl -X GET $prometheusURL/api/v1/targets?match[]=$jobName"
+                sh script: prometheusScrapeCommand, returnStatus: true
+                echo "Metrics scraped for $jobName"
+            }
+        }
+    }
+}
+  stage('Publish Metrics to Grafana with Prometheus') {
+            steps {
+                script {
+                    def grafanaURL = 'http://192.168.1.14:3000' // URL de votre serveur Grafana
+                    def prometheusURL = 'http://192.168.1.14:9090' // URL de votre serveur Prometheus
+
+                    // Create the Grafana dashboard link
+                    def createDashboardLinkCommand = "curl -H 'Authorization: Bearer eyJrIjoieVlGTTJ1a2VhR09IeTd6RllwVUF6VFRmNXppWWtBYlMiLCJuIjoiamVua2lucyIsImlkIjoxfQ==' $grafanaURL/api/dashboards/home"
+                    sh script: createDashboardLinkCommand, returnStatus: true
+
+                    echo "Metrics published to Grafana with Prometheus"
+                }
+            }
+        }
+
+        stage('Open Grafana Dashboard') {
+            steps {
+                script {
+                    def grafanaDashboardURL = 'http://192.168.1.14:3000/d/sX7FzE4Iz/docker-and-system-monitoring?orgId=1&refresh=5m'
+
+                    // Ouvrir l'URL du tableau de bord Grafana
+                    sh "curl -L $grafanaDashboardURL"
+                    // Wait for some time for the user to view the dashboard
+                    sleep(time: 120, unit: 'SECONDS')
+                }
+            }
+        }
+        stage('Display Grafana Dashboard') {
+    steps {
+        script {
+            def grafanaEmbedURL = 'http://192.168.1.14:3000/d/sX7FzE4Iz/docker-and-system-monitoring?from=1699225398330&to=1699311798330&orgId=1'
+            def iframe = """
+            <iframe width="800" height="600" frameborder="0" src="${grafanaEmbedURL}"></iframe>
+            """
+            writeFile file: 'grafana_dashboard.html', text: iframe
+
+            step([$class: 'ArtifactArchiver', artifacts: 'grafana_dashboard.html', allowEmptyArchive: true])
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: false,
+                keepAll: true,
+                reportDir: '', // Set the directory where the HTML file is located
+                reportFiles: 'grafana_dashboard.html', // Set the HTML file name
+                reportName: 'Grafana Dashboard',
+                reportTitles: ''
+            ])
+        }
+    }
+}
+
 
 
         stage('Email nodification'){
@@ -199,7 +265,20 @@ stage("Quality Gate") {
        ''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'mohamedamine.hammami@esprit.tn'
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
     }
+
 
 
 
