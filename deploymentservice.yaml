@@ -36,7 +36,7 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-
+  type: NodePort
 
 ---
 apiVersion: apps/v1
@@ -81,6 +81,7 @@ spec:
     - protocol: TCP
       port: 8089
       targetPort: 8089
+  type: NodePort
 
 ---
 apiVersion: apps/v1
@@ -115,3 +116,4 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
+  type: NodePort
