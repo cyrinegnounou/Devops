@@ -96,22 +96,6 @@ stage("Quality Gate") {
             }
         }
 
-
-
-
-
-
- stage('Push Metrics to Prometheus') {
-    steps {
-         echo "Étape 12 : Envoi de métriques à Prometheus"
-        script {
-            sh 'curl http://192.168.1.14:8080/metrics/NfPwF3FXQZ1wURuvEyjtKOFc4u6Eswrz_xSkI9l0CQMl6ig5L1or7YjbS1wMT3kJ'
-
-    }
-}
-}
-
-
          stage('Docker images') {
             steps {
                 script {
@@ -183,7 +167,15 @@ stage("Quality Gate") {
 
 
             }
+            stage('Push Metrics to Prometheus') {
+                steps {
+                     echo "Étape 12 : Envoi de métriques à Prometheus"
+                    script {
+                        sh 'curl http://192.168.1.14:8080/metrics/NfPwF3FXQZ1wURuvEyjtKOFc4u6Eswrz_xSkI9l0CQMl6ig5L1or7YjbS1wMT3kJ'
 
+                }
+            }
+            }
               stage('Prometheus Metrics Scraping') {
     steps {
         script {
