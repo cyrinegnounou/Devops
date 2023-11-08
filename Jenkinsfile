@@ -11,7 +11,7 @@ pipeline {
                 git branch: 'Reglement', credentialsId: 'git_credentials', url: 'https://github.com/cyrinegnounou/DevOps_Pioneers.git'
             }
         }
-        tage('Static Code Analysis') {
+        stage('Static Code Analysis') {
                     steps {
                          echo "Étape 2 : Analyse statique du code"
                          sh 'mvn checkstyle:checkstyle pmd:pmd findbugs:findbugs'
