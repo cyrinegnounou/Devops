@@ -62,6 +62,12 @@ pipeline {
                 sh 'mvn clean test jacoco:report'
             }
         }
+        stage('Collect JaCoCo Coverage') {
+            steps{
+                 echo "Étape 13 : Collecte de la couverture JaCoCo"
+                   jacoco(execPattern: '**/target/jacoco.exec')
+    }
+        }
 
         // Étape 8 : Tests JUnit/Mockito
         stage('JUnit/Mockito') {
