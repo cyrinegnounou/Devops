@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: mohamedamine1/saadbguir:backend
+          image: baha00/devops:backend
           ports:
             - containerPort: 8089
           env:
@@ -100,7 +100,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: mohamedamine1/saadbguir:frontend
+          image: baha00/devops:frontend
           ports:
             - containerPort: 80
 
